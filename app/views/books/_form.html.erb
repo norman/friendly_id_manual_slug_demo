@@ -1,0 +1,50 @@
+<p>
+  If you add a value in "user slug", then that value will be used as the basis
+  of the Friendly Id slug. Otherwise, the title and author will be used.
+</p>
+
+<p>
+  After generating a slug for a model, FriendlyId will avoid creating a new one, even
+  if the title and author fields change. You can force it to generate a new slug by
+  specifying a value in the "user slug" field, or by checking the "force new slug"
+  checkbox.
+</p>
+
+<p>
+  I am often asked for this functionality and decided the best way to explain it would
+  be with a working application.
+</p>
+
+<%= form_for(@book) do |f| %>
+  <% if @book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+      <ul>
+      <% @book.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :author %><br />
+    <%= f.text_field :author %>
+  </div>
+  <div class="field">
+    <%= f.label :user_slug %><br />
+    <%= f.text_field :user_slug %>
+  </div>
+  <div class="field">
+    <%= f.check_box :generate_new_slug %>
+    <%= f.label :generate_new_slug, "Force new slug, even if user slug above is blank?" %><br />
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
